@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Todo4U Demo",
+  "description": "Simple Todo extension for codezilla.",
+  "version": "1.0",
+  "icons": {
+    "48":"icons/clock.jpg"
+    },
+  "permissions":["contextMenus","notifications","storage"],
+  "background":{
+    "scripts":["background.js"]
+  },
+  "browser_action":{
+    "default_icon":"icons/clock.jpg",
+    "default_title":"Todo4U",
+    "default_popup":"index.html"
+  },
+  "page_action":{
+    "default_icon":"icons/clock.jpg"
+  },
+  "applications": {
+    "gecko": {
+      "id": "dilanSachi@github.com"
+    }
+  }
+}
