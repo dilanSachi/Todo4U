@@ -31,22 +31,24 @@ document.getElementById('myBtn').addEventListener('click',function(){
       var date=document.getElementById('date').value;
       var time=document.getElementById('time').value;
       var checkURL='';
-      if(document.getElementById('checkURL').value=="on"){
-        var tab=browser.tabs.query({currentWindow:true,active:true});
-        tab.then((resd,resi)=>{
-          checkURL=resd[0].url;
-          console.log("asd"+checkURL);
-          todos.push(todo);
-          todos.push(date);
-          todos.push(time);
+      var tab=browser.tabs.query({currentWindow:true,active:true});
+      tab.then((resd,resi)=>{
+        checkURL=resd[0].url;
+        console.log("asd"+checkURL);
+        todos.push(todo);
+        todos.push(date);
+        todos.push(time);
+        if(document.getElementById('checkURL').checked){
           todos.push(checkURL);
-          console.log(todos);
-          var succes=browser.storage.sync.set({todos:todos});
-          succes.then((response)=>{
-            viewPrevious();
-          });
+        }else {
+          todos.push('');
+        }
+        console.log(todos);
+        var succes=browser.storage.sync.set({todos:todos});
+        succes.then((response)=>{
+          viewPrevious();
         });
-      }
+      });
     });
     var promi = browser.storage.sync.get(null);
     prom.then((res) => {

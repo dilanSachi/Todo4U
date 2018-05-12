@@ -1,24 +1,43 @@
 <html>
   <body>
-    <label >Todo4U</label>
-    <form class="form-group">
-      <input type="text" id="todoData" class="form-control" placeholder="Enter todo here" required="true">
-      <label class="blackText">Notify me in :</label>
-      <input type="date" id="date" required="true" class="form-control"/>
-      <input type="time" id="time" required="true" class="form-control"/>
-      </div>
-      <div class="input-group">
-        <div class="form-check mb-2 mr-sm-2">
-          <label class="form-check-label" for="inlineFormCheck">
-            Save current URL
-          </label>
-          <input class="form-check-input" type="checkbox" id="checkURL">
-        </div>
+    <style>
+      .card{
+          padding: 15px;
+          border: 1px solid #4CAF50;
+          width: 400px;
+        }
+        #myLabel{
+          display: block;
+          text-align: center;
+          line-height: 150%;
+          font-size: 20px;
+          font-weight: bold;
+        }
+    </style>
+    <div class="card">
+      <label id="myLabel">Todo4U</label>
+      <form class="form-group">
+        <input type="text" id="todoData" class="form-control" placeholder="Enter todo here" required="true">
       </br>
-    <button type="button" id="myBtn" class="btn btn-success">Save</button>
-    </form>
-    <div id="oldTodos">
-      <button type="button" id="myBtnII" class="btn btn-success">View Previous Todos</button>
+        <label>Date (Optional)  :</label>
+        <input type="date" id="date" required="true" class="form-control"/>
+        <label>Time (Optional) :</label>
+        <input type="time" id="time" required="true" class="form-control"/>
+        <div class="input-group">
+          <div class="form-check mb-2 mr-sm-2">
+          </br>
+            <label class="form-check-label" for="inlineFormCheck">
+              Save current URL
+            </label>
+            <input class="form-check-input" type="checkbox" id="checkURL">
+          </div>
+        </br>
+      <button type="button" id="myBtn" class="btn btn-success">Save</button>
+      </form>
+      <div id="oldTodos">
+      </br>
+        <button type="button" id="myBtnII" class="btn btn-success">Previous Todos</button>
+      </div>
     </div>
   </body>
   <script src="script.js"></script>
@@ -26,8 +45,3 @@
   integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
   crossorigin="anonymous">
 </html>
-<script>
-  document.getElementById('myBtnII').addEventListener('click',function(){
-    alert('asd');
-  });
-</script>
