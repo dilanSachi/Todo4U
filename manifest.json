@@ -6,17 +6,19 @@
   "icons": {
     "48":"icons/clock.jpg"
     },
-  "permissions":["contextMenus","notifications","storage"],
+  "permissions":["storage","contextMenus","notifications","tabs"],
   "background":{
     "scripts":["background.js"]
   },
   "browser_action":{
     "default_icon":"icons/clock.jpg",
     "default_title":"Todo4U",
-    "default_popup":"index.html"
+    "default_popup":"index.html",
+    "browser_style":true
   },
   "page_action":{
-    "default_icon":"icons/clock.jpg"
+    "default_icon":"icons/clock.jpg",
+    "browser_style":true
   },
   "applications": {
     "gecko": {
