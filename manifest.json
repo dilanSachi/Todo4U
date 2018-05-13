@@ -6,7 +6,7 @@
   "icons": {
     "48":"icons/clock.jpg"
     },
-  "permissions":["storage","contextMenus","notifications","tabs"],
+  "permissions":["storage","contextMenus","notifications","tabs","alarms"],
   "background":{
     "scripts":["background.js"]
   },

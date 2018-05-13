@@ -24,7 +24,6 @@ function viewPrevious(){
 document.getElementById('myBtn').addEventListener('click',function(){
   if(document.getElementById('todoData').value!=""){
     var prom = browser.storage.sync.get(null);
-    console.log(document.getElementById('checkURL').value);
     prom.then((res) => {
       var todos=res.todos;
       var todo=document.getElementById('todoData').value;
@@ -34,10 +33,11 @@ document.getElementById('myBtn').addEventListener('click',function(){
       var tab=browser.tabs.query({currentWindow:true,active:true});
       tab.then((resd,resi)=>{
         checkURL=resd[0].url;
-        console.log("asd"+checkURL);
         todos.push(todo);
+        var len=todos.length-1;
         todos.push(date);
         todos.push(time);
+        schedule(date,time,len);
         if(document.getElementById('checkURL').checked){
           todos.push(checkURL);
         }else {
@@ -51,10 +51,33 @@ document.getElementById('myBtn').addEventListener('click',function(){
       });
     });
     var promi = browser.storage.sync.get(null);
-    prom.then((res) => {
+    promi.then((res) => {
       console.log(res.todos);
     });
   }else{
     alert('Please Enter Data');
   }
 });
+
+function schedule(date,time,len){
+  console.log(date);
+  var myYear=parseInt(date.slice(0,4));
+  var myMonth=parseInt(date.slice(5,7))-1;
+  var myDay=parseInt(date.slice(8,10));
+  var myHour=parseInt(time.slice(0,2));
+  var myMin=parseInt(time.slice(3,5));
+  var newTimer=new Date(myYear,myMonth,myDay,myHour,myMin);
+  console.log(newTimer);
+  console.log(Date.parse(newTimer));
+  console.log(Date.now());
+  const when =Date.parse(newTimer);
+  console.log(len.toString());
+  browser.alarms.create(len.toString(), {
+    when
+  });
+  var x=browser.alarms.getAll();
+  x.then((res)=>{
+    console.log(res[0]);
+  });
+
+}
