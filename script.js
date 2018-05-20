@@ -14,10 +14,27 @@ function viewPrevious(){
     var text = '<ul class="list-group list-group-flush">';
     var i;
     for (i = 0; i < res.todos.length; i+=4) {
-      text+='<ul class="list-group list-group-flush"><li class="list-group-item">'+res.todos[i]+'</li>'
+      text+='<ul class="list-group list-group-flush"><li class="list-group-item">'+res.todos[i]+'   '+res.todos[i+1]+'   '+res.todos[i+2]+'</li>';
+      text+='<button type="button" class="btn btn-primary" id='+i+'">Delete</button>';
     }
-    text+='</ul>'
+    text+='</ul>';
     document.getElementById("oldTodos").innerHTML = text;
+    window.onload=function(){
+      console.log("KKOO");
+      var promii = browser.storage.sync.get(null);
+      promii.then((res) => {
+        for(i=0;i<res.todos.length;i+=4){
+          console.log("redda");
+          document.getElementById(i.toString()).addEventListener('click',function(){
+            console.log('kjk'+i);
+            var removingItem = browser.storage.sync.remove(i);
+            removingItem.then(function(){
+              viewPrevious();
+            });
+          });
+        }
+      });
+    }
   });
 }
 
