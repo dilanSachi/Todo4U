@@ -10,15 +10,15 @@ function listen(alarm){
       "type": "basic",
       "iconUrl": 'icons/clock.jpg',
       "title": "Todo4U Notifier",
-      "message": res.todos[parseInt(alarm.name)]
+      "message": alarm.name
     });
-    browser.notifications.onClicked.addListener(function(notificationId) {
+    /*browser.notifications.onClicked.addListener(function(notificationId) {
       console.log('Notification ' + notificationId + ' was clicked by the user');
       if(res.todos[parseInt(alarm.name)]+3!=''){
         browser.tabs.create({
-          url:res.todos[parseInt(alarm.name)]+3
+          url:res.todos[parseInt(alarm.name)+3]
         });
       }
-    });
+    });*/
   });
 }

@@ -11,35 +11,67 @@ document.getElementById('myBtnII').addEventListener('click',function(){
 function viewPrevious(){
   var prom = browser.storage.sync.get(null);
   prom.then((res) => {
-    var text = '<ul class="list-group list-group-flush">';
+    /*var text = '<ul class="list-group list-group-flush">';
     var i;
     for (i = 0; i < res.todos.length; i+=4) {
       text+='<ul class="list-group list-group-flush"><li class="list-group-item">'+res.todos[i]+'   '+res.todos[i+1]+'   '+res.todos[i+2]+'</li>';
-      text+='<button type="button" class="btn btn-primary" id='+i+'">Delete</button>';
+      text+='<button type="button" class="btn btn-primary" onClick="myFunc" id='+i+'">Delete</button>';
     }
     text+='</ul>';
-    document.getElementById("oldTodos").innerHTML = text;
-    window.onload=function(){
-      console.log("KKOO");
-      var promii = browser.storage.sync.get(null);
-      promii.then((res) => {
-        for(i=0;i<res.todos.length;i+=4){
-          console.log("redda");
-          document.getElementById(i.toString()).addEventListener('click',function(){
-            console.log('kjk'+i);
-            var removingItem = browser.storage.sync.remove(i);
-            removingItem.then(function(){
-              viewPrevious();
-            });
-          });
+    document.getElementById("oldTodos").innerHTML = text;*/
+
+    var ul = document.createElement('ul');
+    ul.classList.add('list-group', 'list-group-flush');
+
+    var i;
+    for (i = 0; i < res.todos.length; i+=4) {
+        var li = document.createElement('li');
+        li.classList.add('list-group-item');
+        li.textContent = res.todos[i]+'   '+res.todos[i+1]+'   '+res.todos[i+2];
+        ul.appendChild(li);
+        if(res.todos[i+3]!=''){
+          var li = document.createElement('li');
+          li.classList.add('list-group-item');
+          li.textContent = "Saved URL : "+res.todos[i+3];
+          ul.appendChild(li);
         }
-      });
+
+        var button = document.createElement('button');
+        button.classList.add('btn', 'btn-primary');
+        button.addEventListener('click', myFunc);
+        button.id = i;
+        button.innerText="Delete";
+
+        ul.appendChild(button);
     }
+    document.getElementById("oldTodos").innerHTML = '';
+    document.getElementById("oldTodos").appendChild(ul);
+
+  });
+}
+
+function myFunc(){
+  console.log("ABC");
+  console.log("Kakki");
+  var prom=browser.storage.sync.get(null);
+  prom.then((res)=>{
+    console.log(res.todos);
+    var todos=res.todos;
+    todos.splice(parseInt(this.id),4);
+    console.log(todos);
+    var succes=browser.storage.sync.set({todos:todos});
+    succes.then((response)=>{
+      viewPrevious();
+    });
   });
 }
 
 document.getElementById('myBtn').addEventListener('click',function(){
-  if(document.getElementById('todoData').value!=""){
+  if(document.getElementById('todoData').value!="" && document.getElementById('date').value!='' && document.getElementById('time').value==''){
+    alert("Enter  time");
+  }else if(document.getElementById('todoData').value!='' && document.getElementById('date').value=='' && document.getElementById('time').value!=''){
+    alert("Enter date");
+  }else if(document.getElementById('todoData').value!=""){
     var prom = browser.storage.sync.get(null);
     prom.then((res) => {
       var todos=res.todos;
@@ -51,10 +83,11 @@ document.getElementById('myBtn').addEventListener('click',function(){
       tab.then((resd,resi)=>{
         checkURL=resd[0].url;
         todos.push(todo);
-        var len=todos.length-1;
         todos.push(date);
         todos.push(time);
-        schedule(date,time,len);
+        if(date!='' && time!=''){
+          schedule(date,time,todo);
+        }
         if(document.getElementById('checkURL').checked){
           todos.push(checkURL);
         }else {
@@ -76,7 +109,7 @@ document.getElementById('myBtn').addEventListener('click',function(){
   }
 });
 
-function schedule(date,time,len){
+function schedule(date,time,todo){
   console.log(date);
   var myYear=parseInt(date.slice(0,4));
   var myMonth=parseInt(date.slice(5,7))-1;
@@ -84,17 +117,14 @@ function schedule(date,time,len){
   var myHour=parseInt(time.slice(0,2));
   var myMin=parseInt(time.slice(3,5));
   var newTimer=new Date(myYear,myMonth,myDay,myHour,myMin);
-  console.log(newTimer);
-  console.log(Date.parse(newTimer));
-  console.log(Date.now());
   const when =Date.parse(newTimer);
-  console.log(len.toString());
-  browser.alarms.create(len.toString(), {
+  browser.alarms.create(todo, {
     when
   });
+
   var x=browser.alarms.getAll();
   x.then((res)=>{
-    console.log(res[0]);
+    console.log(res);
   });
 
 }
