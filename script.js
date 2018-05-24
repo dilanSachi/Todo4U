@@ -1,8 +1,3 @@
-/*document.getElementById('myBtn').addEventListener('click',function(){
-  browser.runtime.sendMessage({
-    action:'notify'
-  });
-});*/
 
 document.getElementById('myBtnII').addEventListener('click',function(){
   viewPrevious();
@@ -11,15 +6,6 @@ document.getElementById('myBtnII').addEventListener('click',function(){
 function viewPrevious(){
   var prom = browser.storage.sync.get(null);
   prom.then((res) => {
-    /*var text = '<ul class="list-group list-group-flush">';
-    var i;
-    for (i = 0; i < res.todos.length; i+=4) {
-      text+='<ul class="list-group list-group-flush"><li class="list-group-item">'+res.todos[i]+'   '+res.todos[i+1]+'   '+res.todos[i+2]+'</li>';
-      text+='<button type="button" class="btn btn-primary" onClick="myFunc" id='+i+'">Delete</button>';
-    }
-    text+='</ul>';
-    document.getElementById("oldTodos").innerHTML = text;*/
-
     var ul = document.createElement('ul');
     ul.classList.add('list-group', 'list-group-flush');
 
@@ -51,14 +37,10 @@ function viewPrevious(){
 }
 
 function myFunc(){
-  console.log("ABC");
-  console.log("Kakki");
   var prom=browser.storage.sync.get(null);
   prom.then((res)=>{
-    console.log(res.todos);
     var todos=res.todos;
     todos.splice(parseInt(this.id),4);
-    console.log(todos);
     var succes=browser.storage.sync.set({todos:todos});
     succes.then((response)=>{
       viewPrevious();
@@ -93,16 +75,11 @@ document.getElementById('myBtn').addEventListener('click',function(){
         }else {
           todos.push('');
         }
-        console.log(todos);
         var succes=browser.storage.sync.set({todos:todos});
         succes.then((response)=>{
           viewPrevious();
         });
       });
-    });
-    var promi = browser.storage.sync.get(null);
-    promi.then((res) => {
-      console.log(res.todos);
     });
   }else{
     alert('Please Enter Data');
@@ -110,7 +87,6 @@ document.getElementById('myBtn').addEventListener('click',function(){
 });
 
 function schedule(date,time,todo){
-  console.log(date);
   var myYear=parseInt(date.slice(0,4));
   var myMonth=parseInt(date.slice(5,7))-1;
   var myDay=parseInt(date.slice(8,10));
@@ -121,10 +97,4 @@ function schedule(date,time,todo){
   browser.alarms.create(todo, {
     when
   });
-
-  var x=browser.alarms.getAll();
-  x.then((res)=>{
-    console.log(res);
-  });
-
 }
